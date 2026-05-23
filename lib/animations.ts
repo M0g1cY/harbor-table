@@ -63,6 +63,16 @@ export const SCROLL_TRIGGER = {
   scaleInitial: 1.05,  // Menu 卡片初始缩放
 } as const;
 
+/** Magnetic Button 参数 - Phase 3B */
+export const MAGNETIC = {
+  /** 磁吸强度系数 (0-1) */
+  strength: 0.35,
+  /** 磁吸半径 (px) - 超出此距离不触发 */
+  radius: 80,
+  /** 位移插值速度 (0-1) - 越小越平滑 */
+  lerp: 0.18,
+} as const;
+
 /** prefers-reduced-motion 检测 */
 export const prefersReducedMotion = (): boolean => {
   if (typeof window === 'undefined') return false;

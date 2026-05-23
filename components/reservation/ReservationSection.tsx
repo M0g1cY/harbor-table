@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Container from '@/components/ui/Container';
+import MagneticButton from '@/components/ui/MagneticButton';
 import { useReservationScroll } from '@/hooks/useReservationScroll';
 import { reservationSchema, type ReservationFormData } from '@/lib/reservationSchema';
 
@@ -228,14 +229,14 @@ export default function ReservationSection() {
               </div>
 
               {/* Submit Button */}
-              <button
+              <MagneticButton
                 type="submit"
                 disabled={isSubmitting}
                 className="btn-solid-gold mt-8 self-start px-12 py-4 font-body text-sm tracking-[0.2em] disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Submit reservation request"
               >
                 {isSubmitting ? 'SUBMITTING...' : 'RESERVE NOW'}
-              </button>
+              </MagneticButton>
             </form>
           </div>
 

@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import { useHeroIntro } from '@/hooks/useHeroIntro';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 /**
  * Hero Section - 全屏首屏区块
@@ -78,14 +79,14 @@ export default function HeroSection() {
         </p>
 
         {/* CTA Button */}
-        <button
+        <MagneticButton
           ref={ctaRef}
           type="button"
           className="btn-outline-gold mt-12 px-10 py-4 font-body text-sm tracking-[0.2em]"
           aria-label="Reserve a table at Harbor Table"
         >
           RESERVE A TABLE
-        </button>
+        </MagneticButton>
       </div>
 
       {/* Scroll Indicator */}
