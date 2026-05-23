@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Container from '@/components/ui/Container';
@@ -10,8 +10,16 @@ import { reservationSchema, type ReservationFormData } from '@/lib/reservationSc
 
 /**
  * Reservation Section - 预约表单区块
- * 包含预约表单和提交按钮
+ * Phase 4B: 连接 /api/reservation 伪后端
  */
+
+type SubmissionState =
+  | { status: 'idle' }
+  | { status: 'success'; message: string }
+  | { status: 'error'; message: string }
+  | { status: 'rate-limited'; message: string }
+  | { status: 'network-error'; message: string };
+
 export default function ReservationSection() {
   // Refs for scroll animations
   const labelRef = useRef<HTMLParagraphElement>(null);
@@ -19,19 +27,59 @@ export default function ReservationSection() {
   const formFieldsRef = useRef<HTMLFormElement>(null);
   const infoBlocksRef = useRef<HTMLDivElement>(null);
 
+  // Submission state
+  const [submissionState, setSubmissionState] = useState<SubmissionState>({ status: 'idle' });
+
   // React Hook Form + Zod validation
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<ReservationFormData>({
     resolver: zodResolver(reservationSchema),
   });
 
-  // Form submission handler (console.log only, no backend)
-  const onSubmit = (data: ReservationFormData) => {
-    console.log('Reservation submitted:', data);
-    // TODO: Replace with actual API call in future phase
+  // Form submission handler - calls /api/reservation
+  const onSubmit = async (data: ReservationFormData) => {
+    setSubmissionState({ status: 'idle' });
+
+    try {
+      const response = await fetch('/api/reservation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          website: '', // honeypot field - always empty for real users
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmissionState({
+          status: 'success',
+          message: result.message || 'Reservation request received. We will contact you shortly.',
+        });
+        reset(); // Clear form on success
+      } else if (response.status === 429) {
+        setSubmissionState({
+          status: 'rate-limited',
+          message: result.error || 'Too many requests. Please wait a moment.',
+        });
+      } else {
+        setSubmissionState({
+          status: 'error',
+          message: result.error || 'An error occurred. Please try again.',
+        });
+      }
+    } catch (error) {
+      console.error('Reservation submission error:', error);
+      setSubmissionState({
+        status: 'network-error',
+        message: 'Network error. Please check your connection and try again.',
+      });
+    }
   };
 
   // Initialize scroll animations
@@ -237,6 +285,37 @@ export default function ReservationSection() {
               >
                 {isSubmitting ? 'SUBMITTING...' : 'RESERVE NOW'}
               </MagneticButton>
+
+              {/* Submission State Feedback */}
+              {submissionState.status !== 'idle' && (
+                <div
+                  className="mt-6 rounded-sm border px-6 py-4 font-body text-sm"
+                  style={{
+                    borderColor:
+                      submissionState.status === 'success'
+                        ? 'var(--color-gold)'
+                        : submissionState.status === 'rate-limited'
+                        ? 'var(--color-muted)'
+                        : '#d4af37',
+                    backgroundColor:
+                      submissionState.status === 'success'
+                        ? 'rgba(201, 169, 110, 0.1)'
+                        : submissionState.status === 'rate-limited'
+                        ? 'rgba(107, 107, 107, 0.1)'
+                        : 'rgba(212, 175, 55, 0.1)',
+                    color:
+                      submissionState.status === 'success'
+                        ? 'var(--color-gold)'
+                        : submissionState.status === 'rate-limited'
+                        ? 'var(--color-muted)'
+                        : 'var(--color-accent)',
+                  }}
+                  role="status"
+                  aria-live="polite"
+                >
+                  {submissionState.message}
+                </div>
+              )}
             </form>
           </div>
 
