@@ -105,7 +105,45 @@ types/              # TypeScript 类型定义
 - [x] Phase 0: 项目初始化
 - [x] Phase 1: 静态版本（Hero / Philosophy / Menu / Reservation / Footer）
 - [x] Phase 2: 动画层（Hero 入场 + 5 个 Section ScrollTrigger + Lenis）
-- [ ] Phase 3: 高级交互（Magnetic / 表单验证 / 页面过渡）
+- [ ] Phase 3: 高级交互（表单验证 / Magnetic / Tilt / Footer 微交互 / Hero 视差）
+
+## Phase 3 分支策略
+
+Phase 3 使用单 feature branch 开发：`phase-3-interactions`。
+
+- 除非需要并行开发多个方向，否则不强制使用 worktree。
+- 单分支推进，单子阶段单 commit，便于回溯与回滚。
+- 完成 Phase 3 后再合回 main 并部署。
+
+> 这是对 Phase 3 的特例化决策，与 CLAUDE.md 顶部"L2/L3 必须 worktree"的通用规则并存：
+> - 通用规则仍然适用于未来其他 L2/L3 任务。
+> - Phase 3 子阶段彼此线性依赖（共享 transform / 指针交互模式），并行收益低、协调成本高，因此选择单分支。
+
+## Phase 3 执行顺序
+
+确认顺序（先功能增强、再交互模式沉淀、最后影响首屏的高风险项）：
+
+1. **Phase 3A** — Reservation 表单验证（React Hook Form + Zod）
+2. **Phase 3B** — Magnetic Button（沉淀 pointer-fine / reduced-motion 交互模式）
+3. **Phase 3C** — Menu 卡片 3D tilt（双层结构避免与 ScrollTrigger 视差的 transform 叠加）
+4. **Phase 3D** — Footer 微交互（链接下划线、社交图标 hover）
+5. **Phase 3E** — Hero 鼠标视差（必须在 intro timeline `onComplete` 之后挂载）
+6. **Phase 3 Final QA** — 全 Section 回归 + a11y + Lighthouse + PHASE3_REPORT.md
+
+### 顺序设计原因
+- 表单验证是功能增强，与现有动画无 transform 冲突，优先做
+- Magnetic Button 先沉淀 `pointer: fine` + reduced-motion 模式，后续 3C / 3E 直接复用
+- Menu tilt 涉及 transform 叠加，放在交互模式沉淀完之后更稳
+- Hero 鼠标视差影响首屏稳定性，最后做
+
+### Phase 3A 起步动作
+进入 3A 时第一步先单独安装并 commit：
+```bash
+npm i @hookform/resolvers
+git add package.json package-lock.json
+git commit -m "chore: add hookform resolvers"
+```
+不得与功能代码混进同一 commit。
 
 ## Phase 2 工程规则（ScrollTrigger + GSAP）
 
@@ -199,5 +237,7 @@ useEffect(() => {
 - `startLate: 'top 75%'` - 需要延迟触发的元素
 
 ## 下一步
-Phase 3: 高级交互（Magnetic 效果 / 表单验证 / 页面过渡）
+Phase 3A: Reservation 表单验证（React Hook Form + Zod）
+
+详见上方 "Phase 3 执行顺序" 与 [PROJECT_SPEC.md](./PROJECT_SPEC.md) Section 6。
 
