@@ -3,10 +3,12 @@ import PhilosophySection from '@/components/philosophy/PhilosophySection';
 import MenuSection from '@/components/menu/MenuSection';
 import ReservationSection from '@/components/reservation/ReservationSection';
 import Footer from '@/components/footer/Footer';
+import RestaurantJsonLd from '@/components/seo/RestaurantJsonLd';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <RestaurantJsonLd />
       <HeroSection />
       <PhilosophySection />
       <MenuSection />

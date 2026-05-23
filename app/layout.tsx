@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import LenisProvider from "@/components/providers/LenisProvider";
+import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -18,8 +19,73 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Harbor Table - Modern American Dining",
-  description: "Experience elevated American cuisine in the heart of New York. Reserve your table today.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: `${siteConfig.name} — ${siteConfig.tagline}`,
+    template: `%s — ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  generator: "Next.js",
+  keywords: [
+    "Harbor Table",
+    "Modern American restaurant",
+    "New York fine dining",
+    "Seasonal tasting menu",
+    "NYC reservations",
+    "Harbor-side dining",
+  ],
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    description: siteConfig.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    description: siteConfig.shortDescription,
+    creator: siteConfig.twitterHandle,
+    site: siteConfig.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
+  category: "restaurant",
+  formatDetection: {
+    telephone: true,
+    address: true,
+    email: true,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#0a0a0a" },
+  ],
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
