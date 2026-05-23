@@ -41,7 +41,7 @@ export default function MenuSection() {
 
   return (
     <section
-      className="relative w-full py-20 lg:py-40"
+      className="relative w-full py-20 pb-32 lg:py-40 lg:pb-48"
       style={{ backgroundColor: 'var(--color-surface)' }}
     >
       <Container>

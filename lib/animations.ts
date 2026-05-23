@@ -73,6 +73,20 @@ export const MAGNETIC = {
   lerp: 0.18,
 } as const;
 
+/** 3D Tilt 参数 - Phase 3C */
+export const TILT = {
+  /** 最大倾斜角度 (deg) */
+  maxDeg: 6,
+  /** 旋转插值速度 (秒) - 越小越平滑 */
+  lerp: 0.12,
+  /** 透视距离 (px) - 控制 3D 效果强度 */
+  perspective: 1000,
+  /** 图片层深度 (px) - translateZ */
+  imageDepth: 20,
+  /** 内容层深度 (px) - translateZ */
+  contentDepth: 40,
+} as const;
+
 /** prefers-reduced-motion 检测 */
 export const prefersReducedMotion = (): boolean => {
   if (typeof window === 'undefined') return false;
