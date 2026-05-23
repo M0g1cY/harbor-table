@@ -42,7 +42,7 @@ export default function Footer() {
         {/* Large Logo */}
         <div ref={logoRef} className="mb-16 text-center">
           <h2
-            className="font-display text-4xl font-light tracking-wider lg:text-6xl"
+            className="footer-logo font-display text-4xl font-light tracking-wider lg:text-6xl"
             style={{
               color: 'var(--color-cream)',
               fontFamily: 'var(--font-display)',
@@ -129,7 +129,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="link-muted-gold font-body text-sm"
+                className="footer-social-link font-body text-sm"
                 aria-label="Visit our Instagram page"
               >
                 Instagram
@@ -138,7 +138,7 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="link-muted-gold font-body text-sm"
+                className="footer-social-link font-body text-sm"
                 aria-label="Visit our Facebook page"
               >
                 Facebook
@@ -147,7 +147,7 @@ export default function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="link-muted-gold font-body text-sm"
+                className="footer-social-link font-body text-sm"
                 aria-label="Visit our Twitter page"
               >
                 Twitter

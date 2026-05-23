@@ -153,3 +153,65 @@ body {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
+
+/* Footer 社交链接微交互 - Phase 3D */
+.footer-social-link {
+  position: relative;
+  color: var(--color-muted);
+  transition: color 300ms var(--ease-out);
+  display: inline-block;
+}
+
+.footer-social-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-gold);
+  transition: width 400ms var(--ease-out);
+}
+
+.footer-social-link:hover,
+.footer-social-link:focus-visible {
+  color: var(--color-gold);
+  outline: none;
+}
+
+.footer-social-link:hover::after {
+  width: 100%;
+}
+
+.footer-social-link:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+}
+
+.footer-social-link:focus-visible::after {
+  width: 0;
+}
+
+/* Footer Logo 微交互 - Phase 3D */
+.footer-logo {
+  transition: letter-spacing 400ms var(--ease-out);
+}
+
+.footer-logo:hover {
+  letter-spacing: 0.05em;
+}
+
+/* prefers-reduced-motion 降级 */
+@media (prefers-reduced-motion: reduce) {
+  .footer-social-link::after {
+    transition: none;
+  }
+
+  .footer-logo {
+    transition: none;
+  }
+
+  .footer-logo:hover {
+    letter-spacing: inherit;
+  }
+}
