@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+:root {
+  /* Colors - Awwwards Dark Theme */
+  --color-bg: #0a0a0a;
+  --color-gold: #c9a96e;
+  --color-cream: #f5f0e8;
+  --color-surface: #141414;
+  --color-muted: #6b6b6b;
+  --color-text: #ffffff;
+  --color-accent: #d4af37;
+
+  /* Typography
+   * 注意：--font-display / --font-body 由 next/font 自动注入到 <html> className，
+   * 不要在 :root 重新声明，否则会形成 var() 自引用。
+   */
+  --font-size-body: 18px;
+  --font-size-h1: 72px;
+  --font-size-h2: 48px;
+  --font-size-h3: 32px;
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.5;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 6rem;
+
+  /* Animation */
+  --duration-base: 0.8s;
+  --duration-fast: 0.3s;
+  --duration-normal: 0.6s;
+  --duration-slow: 1.2s;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --font-sans: var(--font-body);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* 不使用 scroll-behavior: smooth，避免与 Lenis 的滚动接管冲突。
+   * Lenis 未启用时（移动端 / reduced-motion）使用浏览器原生滚动。 */
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * Site Container - 全站统一布局容器
+ * 纯 CSS 实现，避免依赖 Tailwind utility 解析顺序与 flex 父级影响
+ * Mobile: padding 24px / Tablet: 40px / Desktop: 64px / Max: 1440px
+ */
+.site-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@media (min-width: 768px) {
+  .site-container {
+    padding-inline: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-container {
+    padding-inline: 64px;
+  }
+}
+
+/**
+ * Interactive Utilities - Hover / Focus 状态工具类
+ * 替代组件内的 onMouseEnter/onMouseLeave inline style
+ * 支持 :focus-visible，保证键盘导航可见反馈
+ */
+
+/* CTA 描边按钮：金色描边，hover 时浅金底色 */
+.btn-outline-gold {
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  background-color: transparent;
+  transition: background-color 300ms var(--ease-out);
+}
+.btn-outline-gold:hover,
+.btn-outline-gold:focus-visible {
+  background-color: rgba(201, 169, 110, 0.1);
+  outline: none;
+}
+.btn-outline-gold:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* 主按钮：金色填充，hover 时换米白色 */
+.btn-solid-gold {
+  background-color: var(--color-gold);
+  color: var(--color-bg);
+  transition: background-color 300ms var(--ease-out);
+}
+.btn-solid-gold:hover,
+.btn-solid-gold:focus-visible {
+  background-color: var(--color-cream);
+  outline: none;
+}
+.btn-solid-gold:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* 表单细线输入框：默认 muted，focus 时金色 */
+.field-line {
+  border-bottom: 1px solid var(--color-muted);
+  background-color: transparent;
+  color: var(--color-cream);
+  transition: border-color 300ms var(--ease-out);
+}
+.field-line:focus,
+.field-line:focus-visible {
+  border-color: var(--color-gold);
+  outline: none;
+}
+
+/* 文字链接：muted → gold */
+.link-muted-gold {
+  color: var(--color-muted);
+  transition: color 300ms var(--ease-out);
+}
+.link-muted-gold:hover,
+.link-muted-gold:focus-visible {
+  color: var(--color-gold);
+  outline: none;
+}
+.link-muted-gold:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
