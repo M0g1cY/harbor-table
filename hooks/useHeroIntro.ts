@@ -26,6 +26,8 @@ interface HeroIntroRefs {
   subtitle: RefObject<HTMLParagraphElement | null>;
   cta: RefObject<HTMLButtonElement | null>;
   scrollIndicator: RefObject<HTMLDivElement | null>;
+  /** Callback 在 intro 动画完成后调用 */
+  onIntroComplete?: () => void;
 }
 
 export function useHeroIntro(refs: HeroIntroRefs) {
@@ -90,6 +92,10 @@ export function useHeroIntro(refs: HeroIntroRefs) {
       timeline = gsap.timeline({
         delay: HERO_INTRO.startDelay,
         defaults: { ease: 'expo.out' },
+        onComplete: () => {
+          // Intro 动画完成后,通知 HeroSection 可以启用 parallax
+          refs.onIntroComplete?.();
+        },
       });
 
       timeline
@@ -137,5 +143,6 @@ export function useHeroIntro(refs: HeroIntroRefs) {
       timeline?.kill();
       split?.revert();
     };
-  }, [refs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 }

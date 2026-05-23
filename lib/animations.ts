@@ -87,6 +87,16 @@ export const TILT = {
   contentDepth: 40,
 } as const;
 
+/** Hero Parallax 参数 - Phase 3E */
+export const HERO_PARALLAX = {
+  /** 背景层移动强度 (px) - 轻微反向 */
+  bgStrength: 15,
+  /** 标题层移动强度 (px) - 更明显正向 */
+  titleStrength: 30,
+  /** 位移插值速度 (秒) - 越小越平滑 */
+  lerp: 0.25,
+} as const;
+
 /** prefers-reduced-motion 检测 */
 export const prefersReducedMotion = (): boolean => {
   if (typeof window === 'undefined') return false;

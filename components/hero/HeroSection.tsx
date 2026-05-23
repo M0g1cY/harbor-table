@@ -1,14 +1,16 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { useHeroIntro } from '@/hooks/useHeroIntro';
+import { useHeroParallax } from '@/hooks/useHeroParallax';
 import MagneticButton from '@/components/ui/MagneticButton';
 
 /**
  * Hero Section - 全屏首屏区块
  * 包含背景图、大标题、装饰元素和 CTA 按钮
  * Phase 2A：接入 GSAP + SplitType 入场动画（useHeroIntro）
+ * Phase 3E：接入鼠标视差（useHeroParallax）- 必须在 intro 完成后启用
  */
 export default function HeroSection() {
   const backgroundRef = useRef<HTMLDivElement>(null);
@@ -18,6 +20,15 @@ export default function HeroSection() {
   const ctaRef = useRef<HTMLButtonElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
 
+  // Phase 3E: Parallax refs
+  const heroRootRef = useRef<HTMLElement>(null);
+  const backgroundLayerRef = useRef<HTMLDivElement>(null);
+  const titleLayerRef = useRef<HTMLDivElement>(null);
+
+  // Parallax 启用状态 - 只在 intro 完成后才为 true
+  const [parallaxEnabled, setParallaxEnabled] = useState(false);
+
+  // Initialize intro animation
   useHeroIntro({
     background: backgroundRef,
     topLine: topLineRef,
@@ -25,25 +36,40 @@ export default function HeroSection() {
     subtitle: subtitleRef,
     cta: ctaRef,
     scrollIndicator: scrollIndicatorRef,
+    onIntroComplete: () => {
+      // Intro 动画完成后,启用 parallax
+      setParallaxEnabled(true);
+    },
+  });
+
+  // Initialize parallax (只在 intro 完成后生效)
+  useHeroParallax({
+    heroRootRef,
+    backgroundLayerRef,
+    titleLayerRef,
+    enabled: parallaxEnabled,
   });
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
-      {/* Background Image */}
-      <div ref={backgroundRef} className="absolute inset-0 z-0 will-change-transform">
-        <Image
-          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80"
-          alt="Harbor Table restaurant interior"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-black/60" />
+    <section ref={heroRootRef} className="relative min-h-screen w-full overflow-hidden">
+      {/* Background Layer - 受 parallax 控制 */}
+      <div ref={backgroundLayerRef} className="absolute inset-0 z-0">
+        {/* Background Image - 受 intro 控制 */}
+        <div ref={backgroundRef} className="absolute inset-0 will-change-transform">
+          <Image
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80"
+            alt="Harbor Table restaurant interior"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
       </div>
 
-      {/* Content Container */}
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 md:px-12">
+      {/* Content Container - 受 parallax 控制 */}
+      <div ref={titleLayerRef} className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 md:px-12">
         {/* Top Decorative Line */}
         <div
           ref={topLineRef}
