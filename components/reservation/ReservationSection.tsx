@@ -1,8 +1,11 @@
 'use client';
 
 import { useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Container from '@/components/ui/Container';
 import { useReservationScroll } from '@/hooks/useReservationScroll';
+import { reservationSchema, type ReservationFormData } from '@/lib/reservationSchema';
 
 /**
  * Reservation Section - 预约表单区块
@@ -14,6 +17,21 @@ export default function ReservationSection() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const formFieldsRef = useRef<HTMLFormElement>(null);
   const infoBlocksRef = useRef<HTMLDivElement>(null);
+
+  // React Hook Form + Zod validation
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ReservationFormData>({
+    resolver: zodResolver(reservationSchema),
+  });
+
+  // Form submission handler (console.log only, no backend)
+  const onSubmit = (data: ReservationFormData) => {
+    console.log('Reservation submitted:', data);
+    // TODO: Replace with actual API call in future phase
+  };
 
   // Initialize scroll animations
   useReservationScroll({
@@ -54,7 +72,7 @@ export default function ReservationSection() {
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
           {/* Left: Form */}
           <div>
-            <form ref={formFieldsRef} className="flex flex-col gap-8">
+            <form ref={formFieldsRef} onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
               {/* Name Field */}
               <div className="flex flex-col gap-2">
                 <label
@@ -67,10 +85,21 @@ export default function ReservationSection() {
                 <input
                   type="text"
                   id="name"
-                  name="name"
-                  required
+                  {...register('name')}
+                  aria-invalid={errors.name ? 'true' : 'false'}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
                   className="field-line px-0 py-3 font-body text-base"
                 />
+                {errors.name && (
+                  <p
+                    id="name-error"
+                    className="text-xs"
+                    style={{ color: 'var(--color-gold)' }}
+                    role="alert"
+                  >
+                    {errors.name.message}
+                  </p>
+                )}
               </div>
 
               {/* Email Field */}
@@ -85,10 +114,21 @@ export default function ReservationSection() {
                 <input
                   type="email"
                   id="email"
-                  name="email"
-                  required
+                  {...register('email')}
+                  aria-invalid={errors.email ? 'true' : 'false'}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
                   className="field-line px-0 py-3 font-body text-base"
                 />
+                {errors.email && (
+                  <p
+                    id="email-error"
+                    className="text-xs"
+                    style={{ color: 'var(--color-gold)' }}
+                    role="alert"
+                  >
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
 
               {/* Date and Party Size Row */}
@@ -105,61 +145,96 @@ export default function ReservationSection() {
                   <input
                     type="date"
                     id="date"
-                    name="date"
-                    required
+                    {...register('date')}
+                    aria-invalid={errors.date ? 'true' : 'false'}
+                    aria-describedby={errors.date ? 'date-error' : undefined}
                     className="field-line px-0 py-3 font-body text-base"
                   />
+                  {errors.date && (
+                    <p
+                      id="date-error"
+                      className="text-xs"
+                      style={{ color: 'var(--color-gold)' }}
+                      role="alert"
+                    >
+                      {errors.date.message}
+                    </p>
+                  )}
                 </div>
 
                 {/* Party Size Field */}
                 <div className="flex flex-col gap-2">
                   <label
-                    htmlFor="partySize"
+                    htmlFor="guests"
                     className="font-body text-xs tracking-[0.2em]"
                     style={{ color: 'var(--color-gold)' }}
                   >
                     PARTY SIZE
                   </label>
                   <select
-                    id="partySize"
-                    name="partySize"
-                    required
+                    id="guests"
+                    {...register('guests')}
+                    aria-invalid={errors.guests ? 'true' : 'false'}
+                    aria-describedby={errors.guests ? 'guests-error' : undefined}
                     className="field-line px-0 py-3 font-body text-base"
                   >
                     <option value="">Select</option>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
                       <option key={num} value={num} style={{ backgroundColor: 'var(--color-bg)' }}>
                         {num} {num === 1 ? 'Guest' : 'Guests'}
                       </option>
                     ))}
                   </select>
+                  {errors.guests && (
+                    <p
+                      id="guests-error"
+                      className="text-xs"
+                      style={{ color: 'var(--color-gold)' }}
+                      role="alert"
+                    >
+                      {errors.guests.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
               {/* Special Requests Field */}
               <div className="flex flex-col gap-2">
                 <label
-                  htmlFor="requests"
+                  htmlFor="notes"
                   className="font-body text-xs tracking-[0.2em]"
                   style={{ color: 'var(--color-gold)' }}
                 >
                   SPECIAL REQUESTS
                 </label>
                 <textarea
-                  id="requests"
-                  name="requests"
+                  id="notes"
+                  {...register('notes')}
                   rows={4}
+                  aria-invalid={errors.notes ? 'true' : 'false'}
+                  aria-describedby={errors.notes ? 'notes-error' : undefined}
                   className="field-line resize-none px-0 py-3 font-body text-base"
                 />
+                {errors.notes && (
+                  <p
+                    id="notes-error"
+                    className="text-xs"
+                    style={{ color: 'var(--color-gold)' }}
+                    role="alert"
+                  >
+                    {errors.notes.message}
+                  </p>
+                )}
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
-                className="btn-solid-gold mt-8 self-start px-12 py-4 font-body text-sm tracking-[0.2em]"
+                disabled={isSubmitting}
+                className="btn-solid-gold mt-8 self-start px-12 py-4 font-body text-sm tracking-[0.2em] disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Submit reservation request"
               >
-                RESERVE NOW
+                {isSubmitting ? 'SUBMITTING...' : 'RESERVE NOW'}
               </button>
             </form>
           </div>
