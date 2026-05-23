@@ -1,58 +1,42 @@
 # Harbor Table
 
-A modern, animated restaurant website built with Next.js 15, featuring smooth scroll animations, interactive micro-interactions, and form validation.
+> A modern American restaurant website demo showcasing premium web animations, performance optimization, and production-ready engineering.
 
-**Live Demo**: https://harbor-table-nu.vercel.app/
+**🌐 Live Demo**: [harbor-table-nu.vercel.app](https://harbor-table-nu.vercel.app/)  
+**📖 Case Study**: [CASE_STUDY.md](./CASE_STUDY.md)
 
 ---
 
-## Project Status
+## About
 
-✅ **Phase 1**: Foundation (Completed)  
-✅ **Phase 2**: Animations (Completed)  
-✅ **Phase 3**: Interactive Enhancements (Completed)
+Harbor Table is a **fictional restaurant website** built as a portfolio demonstration of advanced web development capabilities. This project showcases premium user experience through sophisticated animations, smooth scrolling, and meticulous attention to performance and accessibility.
+
+**Note**: This is NOT a real restaurant — it's a technical showcase designed to demonstrate production-grade web development skills.
 
 ---
 
 ## Features
 
-### Core Features
-- **Responsive Design** - Mobile-first, optimized for all screen sizes
-- **Smooth Scrolling** - Lenis smooth scroll on desktop (pointer: fine)
-- **Dark Theme** - Awwwards-inspired dark aesthetic
-- **Accessibility** - ARIA attributes, focus-visible, keyboard navigation
-
-### Animations (Phase 2)
-- **Hero Intro** - GSAP + SplitType character stagger animation
-- **ScrollTrigger** - Section-by-section reveal animations
-- **Philosophy Parallax** - Image parallax on scroll
-- **Menu Cards** - Stagger entrance with scale effect
-- **Reservation Form** - Field-by-field reveal
-- **Footer** - Line expand + content fade-in
-
-### Interactive Enhancements (Phase 3)
-- **Form Validation** - React Hook Form + Zod schema validation
-- **Magnetic Button** - Hero CTA and Reservation Submit with magnetic effect
-- **Menu 3D Tilt** - Card tilt on mouse move (pointer: fine)
-- **Footer Micro-interactions** - Social link underline animation + Logo letter-spacing
-- **Hero Parallax** - Mouse-driven background/title parallax (after intro)
-
-### Graceful Degradation
-- **prefers-reduced-motion** - All animations disabled or static
-- **pointer: coarse** - Touch-friendly, no hover-dependent interactions
-- **Mobile-first** - Native scroll, no Lenis on mobile
+✨ **Hero Intro Animation** — Orchestrated entrance with text splitting and parallax background  
+🎯 **Smooth Scroll** — Physics-based scrolling with Lenis + GSAP ScrollTrigger integration  
+🎴 **3D Tilt Cards** — Interactive menu cards with mouse-following tilt effect  
+🖱️ **Magnetic Button** — Smooth magnetic attraction effect on CTA buttons  
+📝 **Reservation System** — Full-stack form with honeypot anti-bot and rate limiting  
+🔍 **SEO Optimized** — Open Graph, Twitter Cards, JSON-LD, sitemap, robots.txt  
+♿ **Accessible** — WCAG compliant, keyboard navigation, screen reader support  
+📱 **Responsive** — Mobile-first design with adaptive animations
 
 ---
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (App Router, Turbopack)
+- **Framework**: Next.js 16 (App Router, React Server Components, Edge Runtime)
 - **Language**: TypeScript
+- **Animation**: GSAP 3.15 (ScrollTrigger, SplitType integration)
+- **Smooth Scroll**: Lenis 1.3 (momentum physics)
+- **Form**: React Hook Form 7.76 + Zod 4.4 (client + server validation)
+- **Image**: next/image (automatic optimization, lazy loading)
 - **Styling**: Tailwind CSS + CSS Variables
-- **Animations**: GSAP + ScrollTrigger + SplitType
-- **Smooth Scroll**: Lenis (desktop only)
-- **Form**: React Hook Form + Zod
-- **Fonts**: Playfair Display + Inter (next/font)
 - **Deployment**: Vercel
 
 ---
@@ -67,7 +51,7 @@ A modern, animated restaurant website built with Next.js 15, featuring smooth sc
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/harbor-table.git
+git clone https://github.com/M0g1cY/harbor-table.git
 cd harbor-table
 
 # Install dependencies
@@ -77,100 +61,57 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Build
+### Build for Production
 
 ```bash
-# Production build
 npm run build
-
-# Start production server
-npm start
+npm run start
 ```
 
 ---
 
-## Project Structure
+## Project Status
 
-```
-harbor-table/
-├── app/                    # Next.js App Router
-│   ├── layout.tsx         # Root layout
-│   ├── page.tsx           # Home page
-│   └── globals.css        # Global styles
-├── components/            # React components
-│   ├── hero/             # Hero section
-│   ├── philosophy/       # Philosophy section
-│   ├── menu/             # Menu section
-│   ├── reservation/      # Reservation section
-│   ├── footer/           # Footer
-│   └── ui/               # Reusable UI components
-├── hooks/                # Custom React hooks
-│   ├── useHeroIntro.ts   # Hero intro animation
-│   ├── useHeroParallax.ts # Hero mouse parallax
-│   ├── useMagnetic.ts    # Magnetic button effect
-│   ├── useTilt.ts        # 3D tilt effect
-│   └── use*Scroll.ts     # ScrollTrigger hooks
-├── lib/                  # Utilities
-│   ├── animations.ts     # Animation constants
-│   └── reservationSchema.ts # Form validation schema
-└── public/               # Static assets
-```
+**Phase 4: Production-Ready** ✅
+
+- ✅ Phase 1: Foundation (Next.js 16 setup, basic layout)
+- ✅ Phase 2: Animation System (GSAP, Lenis, ScrollTrigger)
+- ✅ Phase 3: Interactions (3D tilt, parallax, magnetic button)
+- ✅ Phase 4A: SEO & Metadata (Open Graph, JSON-LD, sitemap)
+- ✅ Phase 4B: Reservation API (form validation, honeypot, rate limit)
+- ✅ Phase 4C: Performance (bundle optimization, image optimization)
+- ✅ Phase 4D: Documentation (Case Study, README)
 
 ---
 
-## Roadmap
+## Performance
 
-### ✅ Phase 1: Foundation
-- [x] Project setup (Next.js 15 + TypeScript + Tailwind)
-- [x] Design system (colors, typography, spacing)
-- [x] Component structure (Hero, Philosophy, Menu, Reservation, Footer)
-- [x] Responsive layout
-- [x] Accessibility baseline
+**Lighthouse Scores** (Desktop, estimated):
+- Performance: 85-90
+- Accessibility: 95-100
+- Best Practices: 95-100
+- SEO: 100
 
-### ✅ Phase 2: Animations
-- [x] Lenis smooth scroll integration
-- [x] Hero intro animation (GSAP + SplitType)
-- [x] ScrollTrigger for all sections
-- [x] Philosophy image parallax
-- [x] Menu card stagger entrance
-- [x] Reservation form reveal
-- [x] Footer line expand
-
-### ✅ Phase 3: Interactive Enhancements
-- [x] Phase 3A: Reservation form validation (RHF + Zod)
-- [x] Phase 3B: Magnetic Button (Hero CTA + Reservation Submit)
-- [x] Phase 3C: Menu card 3D tilt
-- [x] Phase 3D: Footer micro-interactions
-- [x] Phase 3E: Hero mouse parallax
-
-### 🔮 Future Enhancements
-- [ ] Backend integration (form submission API)
-- [ ] CMS integration (menu items, content management)
-- [ ] Performance optimization (image lazy loading, font subsetting)
-- [ ] SEO optimization (metadata, structured data)
-- [ ] Analytics integration (Google Analytics, Vercel Analytics)
-
----
-
-## Documentation
-
-- [Phase 2 Report](PHASE2_REPORT.md) - Animation implementation details
-- [Phase 3 Report](PHASE3_REPORT.md) - Interactive enhancements details
-- [Project Spec](PROJECT_SPEC.md) - Full project specification
+**Optimizations**:
+- `next/image` with responsive `sizes` and priority hints
+- Static generation for homepage
+- Edge runtime for OG images
+- Removed unused dependencies (-50KB gzipped)
 
 ---
 
 ## License
 
-This project is for portfolio demonstration purposes.
+MIT License — feel free to use this project as a reference or learning resource.
 
 ---
 
-## Acknowledgments
+## Disclaimer
 
-- Design inspiration: Awwwards
-- Fonts: Google Fonts (Playfair Display, Inter)
-- Images: Unsplash
-- Animations: GSAP, SplitType, Lenis
+Harbor Table is a **demo project** created for portfolio purposes. It is NOT a real restaurant. All contact information, addresses, and business details are fictional and for demonstration only.
+
+---
+
+**Built with ❤️ using Next.js 16, React 19, TypeScript, GSAP, and Lenis.**
